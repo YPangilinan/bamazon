@@ -2,6 +2,7 @@
 var mysql = require('mysql');
 //require inquirer
 var inquirer = require('inquirer');
+
 //establish connection to database
 var connection = mysql.createConnection({
 
@@ -50,7 +51,7 @@ function purchaseProduct(){
 ]).then(function(response){
     connection.query("SELECT * FROM products", function (err,res){
         if (err) throw err;
-        var pickedItem;
+        var pickedItem= "";
         for (var i = 0; i < res.length; i++) {
             if(res[i].item_id == response.id){
                 pickedItem = res[i];
@@ -61,7 +62,7 @@ function purchaseProduct(){
             "UPDATE products SET ? WHERE ?",
             [
                 {
-                    stock_quantity: (pickedItem.stock_quantity - (response.quantity))
+                    stock_quantity: (pickedItem.stock_quantity -= (response.quantity))
                 },
                 {
                     item_id: pickedItem.id

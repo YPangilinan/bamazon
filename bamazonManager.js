@@ -2,6 +2,7 @@
 var mysql = require('mysql');
 //require inquirer
 var inquirer = require('inquirer');
+
 //establish connection to database
 var connection = mysql.createConnection({
 

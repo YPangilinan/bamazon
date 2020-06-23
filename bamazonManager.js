@@ -113,7 +113,6 @@ function addInventory(){
                 ],
                 function(err) {
                     if (err) throw err;
-                    //show message that certain product and its quantity has been updated in the inventory.
                     console.log("Added "+ response.quantity + " " + chosenItem.product_name + " to the inventory.");
                     connection.end();
                 }

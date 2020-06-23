@@ -12,7 +12,7 @@ var connection = mysql.createConnection({
 
     user: "root",
 
-    password: "Cabuntucan1@",
+    password: "",
     database: "bamazon"
 });
 
@@ -31,12 +31,11 @@ function displayProducts(){
             console.log("ITEM ID: " +res[i].item_id + " | " + "ITEM: " + res[i].product_name + " | " + "PRICE: " + res[i].price);
             console.log("-----------------------------------\n");
           };
-
+          //after showing the menu, begin prompt to user
           purchaseProduct(); 
-        });  
+    });  
 };
-//prompt then asks ID of the product they would like to buy
-//prompt to ask the quantity
+//prompt then asks ID of the product they would like to buy & quantity
 function purchaseProduct(){
     inquirer.prompt([{
         name: "id",
@@ -53,19 +52,18 @@ function purchaseProduct(){
         if (err) throw err;
         var pickedItem= "";
         for (var i = 0; i < res.length; i++) {
-            if(res[i].item_id == response.id){
+            if(res[i].item_id == parseInt(response.id)){
                 pickedItem = res[i];
             }
           }
         if(pickedItem.stock_quantity > parseInt(response.quantity)){
-        connection.query(
-            "UPDATE products SET ? WHERE ?",
+        connection.query("UPDATE products SET ? WHERE ?",
             [
                 {
-                    stock_quantity: (pickedItem.stock_quantity -= (response.quantity))
+                    stock_quantity: pickedItem.stock_quantity -= parseInt(response.quantity)
                 },
                 {
-                    item_id: pickedItem.id
+                    item_id: pickedItem.item_id
                 }
             ],
             function(error){
@@ -80,6 +78,6 @@ function purchaseProduct(){
             console.log("--------------------------------\n");
             displayProducts();
         }; 
-        }); 
+    }); 
 });
 };

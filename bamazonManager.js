@@ -12,7 +12,7 @@ var connection = mysql.createConnection({
 
     user: "root",
 
-    password: "Cabuntucan1@",
+    password: "",
     database: "bamazon"
 });
 
@@ -22,6 +22,7 @@ connection.connect(function(err){
     displayMenu();
 });
 
+//function to prompt the menu
 function displayMenu(){
     inquirer.prompt([
         {
@@ -101,7 +102,6 @@ function addInventory(){
                 chosenItem = res[i];
                 }
             }
-            
             //update the quantity for selected item id
             connection.query("UPDATE products SET ? WHERE ?",
                 [
@@ -117,11 +117,10 @@ function addInventory(){
                     console.log("Added "+ response.quantity + " " + chosenItem.product_name + " to the inventory.");
                     connection.end();
                 }
-                );
+            );
         });
     });
 };
-
 
 //function to add product to inventory
 function addProduct(){
@@ -146,7 +145,6 @@ function addProduct(){
             name: "quantity",
             message: "Item Quantity: "
         }
-        
     ]).then(function(result){
         console.log("Adding your item to the inventory...\n");
         connection.query(
@@ -161,7 +159,6 @@ function addProduct(){
             if(err)throw err;
             console.log(res + "item added... \n");
          }   
-         
         );
         connection.end();
     });

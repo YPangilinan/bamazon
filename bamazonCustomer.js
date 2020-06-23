@@ -82,10 +82,3 @@ function purchaseProduct(){
         }); 
 });
 };
-
-
-//check if there is enough quantity, if not, log "insufficient quanitity", error unfulfilled order
-
-//if enough quantity, update sql database to reflect new quantity
-
-//show user the total cost
